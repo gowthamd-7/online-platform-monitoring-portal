@@ -1,7 +1,7 @@
 # Quick Start Script - Frontend
 # Run this script to start the frontend development server
 
-Write-Host "Starting College Marketing Frontend..." -ForegroundColor Cyan
+Write-Host "Starting Online Platform Monitoring Frontend..." -ForegroundColor Cyan
 Write-Host ""
 
 # Check if we're in the frontend directory

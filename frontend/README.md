@@ -1,4 +1,4 @@
-# College Marketing Platform - Frontend
+# Online Platform Monitoring Portal - Frontend
 
 A modern React + TypeScript application with AI-themed professional design.
 

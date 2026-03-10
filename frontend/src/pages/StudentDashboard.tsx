@@ -10,7 +10,7 @@ function StudentDashboard() {
     navigate('/login')
   }
 
-  const handleSocialMediaClick = () => {
+  const handleOnlinePlatformClick = () => {
     navigate('/social-media', { state: { username } })
   }
 
@@ -87,16 +87,15 @@ function StudentDashboard() {
 
       <main className="dashboard-main">
         <div className="welcome-card">
-          <h2>Welcome, {username}! 🎓</h2>
+          <h2>Welcome, {username}</h2>
           <p>
-            Your college marketing platform is ready. This dashboard will help you
-            track and promote your college's performance across social media and other
-            platforms.
+            Your college activity monitoring platform is ready. This dashboard will help you
+            connect your coding profiles and track your performance across online platforms.
           </p>
         </div>
 
         <div className="dashboard-grid">
-          <div className="dashboard-card" onClick={handleSocialMediaClick}>
+          <div className="dashboard-card" onClick={handleOnlinePlatformClick}>
             <div className="card-icon" style={{ background: 'rgba(0, 212, 255, 0.1)' }}>
               <svg
                 width="24"
@@ -112,8 +111,8 @@ function StudentDashboard() {
                 />
               </svg>
             </div>
-            <h3>Social Media</h3>
-            <p>Manage posts and engagement</p>
+            <h3>Online Platforms</h3>
+            <p>Connect coding profiles</p>
           </div>
 
           <div className="dashboard-card" onClick={handleContentUploadClick}>

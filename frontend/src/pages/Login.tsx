@@ -91,7 +91,7 @@ function Login() {
               <rect x="32" y="32" width="6" height="6" stroke="currentColor" strokeWidth="2" />
             </svg>
           </div>
-          <h1>College Marketing Platform</h1>
+          <h1>Online Platform Monitoring Portal</h1>
           <p className="subtitle">AI-Powered Brand Management</p>
         </div>
 

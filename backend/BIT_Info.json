@@ -1,0 +1,292 @@
+{
+  "name": "Bannari Amman Institute of Technology",
+  "location": "Alathukombai - Post, Sathyamangalam - 638 401, Erode District, Tamil Nadu, India",
+  "contact": {
+    "phone": [
+      "+91 4295 226000",
+      "+91 99429 21289"
+    ],
+    "email": "stayahead@bitsathy.ac.in"
+  },
+  "scraped_date": "2025-12-12 12:08:11",
+  "placements": {
+    "highlights": [
+      "95% placement rate",
+      "Top companies: TCS, Infosys, Wipro, Cognizant",
+      "Average package: ₹6.5 LPA",
+      "Highest package: ₹44 LPA (Virtusa)",
+      "Recent placements: Juspay (27 LPA), Swiggy (18 LPA), Applied Materials (12.3 LPA)"
+    ],
+    "top_recruiters": [
+      "Juspay",
+      "Swiggy",
+      "Informatica",
+      "Thoughtworks",
+      "Applied Materials",
+      "Caterpillar",
+      "Cadence",
+      "Virtusa",
+      "Netgear",
+      "Paga",
+      "Oracle",
+      "L&T Technology Services"
+    ],
+    "packages": {
+      "highest": "44 LPA",
+      "average": "6.5 LPA",
+      "median": "5-7 LPA"
+    }
+  },
+  "facilities": {
+    "academic": {
+      "labs": [
+        "IoT Lab",
+        "AI/ML Lab",
+        "Robotics Lab",
+        "VLSI Lab",
+        "Embedded Systems Lab",
+        "Cloud and Cybersecurity Lab",
+        "Manufacturing and Fabrication Lab",
+        "Sensors Lab"
+      ],
+      "library": "50,000+ books, digital library, 24/7 access",
+      "classrooms": "Modern lecture halls with smart boards",
+      "computer_centers": "High-performance computing facilities"
+    },
+    "campus_life": {
+      "hostels": "Modern AC rooms, WiFi, 24/7 security, capacity 500+, nutritious meals included",
+      "sports": "Cricket, football, basketball, volleyball, badminton courts, gymnasium",
+      "transport": "Bus service from 15+ cities",
+      "cafeteria": "Multi-cuisine cafeteria and co-operative store",
+      "medical": "On-campus clinic for student and staff health",
+      "banking": "ATM facilities (Axis Bank, SBI, KVB)"
+    },
+    "innovation_centers": {
+      "TBI": "Technology Business Incubator for startups",
+      "IIC": "Institution's Innovation Council",
+      "IIPC": "Institute Industry Partnership Cell",
+      "Special_Labs": "Industry-sponsored labs and research centers"
+    }
+  },
+  "programs": {
+    "undergraduate": {
+      "departments": [
+        "Computer Science and Engineering",
+        "Artificial Intelligence and Data Science",
+        "Information Technology",
+        "Electronics and Communication Engineering",
+        "Electrical and Electronics Engineering",
+        "Mechanical Engineering",
+        "Civil Engineering",
+        "Chemical Engineering",
+        "Biotechnology",
+        "Agricultural Engineering"
+      ]
+    },
+    "postgraduate": {
+      "programs": [
+        "M.E Computer Science and Engineering",
+        "M.E Applied Electronics",
+        "M.E Power Systems Engineering",
+        "MBA"
+      ]
+    },
+    "special_features": {
+      "honors_program": "Advanced courses, research mentorship, industry projects",
+      "certifications": "Free AWS, Google Cloud, Microsoft certifications",
+      "industry_training": "Coding bootcamps, internships, industry mentorship"
+    }
+  },
+  "upcoming_events": [
+    {
+      "name": "Smart India Hackathon - Grand Finale",
+      "date": "08 to 12 Dec 2025",
+      "type": "National Hackathon"
+    },
+    {
+      "name": "DST-ANRF Workshop on AI-Enabled Joint Communication and Sensing for Beyond-5G",
+      "date": "11 to 13 Dec 2025",
+      "department": "ECE"
+    },
+    {
+      "name": "National Conference on Recent Trends and Technologies in AI and Data Science (NCRTAD 2025)",
+      "date": "12 Dec 2025",
+      "department": "AIDS"
+    },
+    {
+      "name": "14th National Conference on Innovations in Information Technology (NCIIT 2025)",
+      "date": "16 to 17 Dec 2025",
+      "department": "CSE"
+    },
+    {
+      "name": "National Conference on Innovations Materials for Sustainable Environment and Energy Applications",
+      "date": "24 Dec 2025",
+      "department": "Chemistry"
+    }
+  ],
+  "scholarships": [
+    {
+      "type": "Merit Scholarship",
+      "max_amount": "Up to 75%",
+      "criteria": "90%+ score in qualifying exam"
+    },
+    {
+      "type": "Need-based Scholarship",
+      "max_amount": "Up to 50%",
+      "criteria": "Family income < ₹3 lakhs per annum"
+    },
+    {
+      "type": "Sports Scholarship",
+      "description": "For district/state/national level athletes"
+    },
+    {
+      "type": "Government Scholarships",
+      "description": "SC/ST/OBC/Minority scholarships as per government norms"
+    }
+  ],
+  "recent_achievements": [
+    {
+      "title": "1st & 3rd place at PETRICHOR '25, IIT Palakkad",
+      "date": "January 19, 2025",
+      "prize": "Top positions"
+    },
+    {
+      "title": "1st prize in Audio Hackathon at ADCx India 2025",
+      "date": "January 17-19, 2025",
+      "location": "Bengaluru"
+    },
+    {
+      "title": "First Prize in Robo Run at SHAASTRA 2025, IIT Madras",
+      "date": "2025",
+      "prize": "Cash prize"
+    },
+    {
+      "title": "Second Runner-Up at Janatics Automation Challenge",
+      "date": "November 2025",
+      "prize": "₹25,000"
+    },
+    {
+      "title": "First Prize at Meshmerize Maze Solving - 29th Techfest IIT Bombay",
+      "date": "November 2, 2025",
+      "team": "Sensors Lab"
+    },
+    {
+      "title": "Runner-Up in 23rd Create the Future Design Contest",
+      "date": "October 29, 2025",
+      "organizer": "NASA TechBriefs and SAE Media Group, USA"
+    },
+    {
+      "title": "Top prizes at IIST Thiruvananthapuram",
+      "date": "October 18, 2025",
+      "categories": "IoT, Embedded, VLSI & PCB"
+    },
+    {
+      "title": "Second Runner-Up at Indian Army Terrier Cyber Quest 2025",
+      "prize": "₹25,000",
+      "innovation": "Quantum ML-powered Netflow threat detection"
+    },
+    {
+      "title": "Third Prize in SAEINDIA Bicycle Design Challenge 2025",
+      "team": "Manufacturing and Fabrication Cell",
+      "prize": "₹15,000"
+    },
+    {
+      "title": "First Prize at MobilityX 2.0 Competition",
+      "team": "AI CLASHERS",
+      "prize": "₹20,000",
+      "project": "Smart Adaptive Traffic Light Controller"
+    },
+    {
+      "title": "First Prize in Code Cubicle 5.0 at Microsoft Office Bengaluru",
+      "date": "September 26, 2025",
+      "team": "Cloud and Cybersecurity Lab",
+      "prize": "₹25,000"
+    },
+    {
+      "title": "3rd place at ABB Hackathon 2025",
+      "prize": "₹84,000 vouchers + internship",
+      "project": "AI-based alloy optimization"
+    },
+    {
+      "title": "First Place at Cyber Hackathon 2025",
+      "location": "Thoothukudi",
+      "organizer": "Police & VOC College",
+      "prize": "₹70,000"
+    },
+    {
+      "title": "Second place at National Forensic Hackathon 2025",
+      "location": "Delhi",
+      "prize": "₹1 lakh"
+    },
+    {
+      "title": "First Prize at Himashield 2024",
+      "date": "February 2025",
+      "prize": "₹5.10 lakhs",
+      "project": "GLOF mitigation solution"
+    },
+    {
+      "title": "1st place in Efficiency event at hBaja 2025",
+      "organizer": "SAEINDIA at NATRAX, Madhya Pradesh",
+      "date": "January 6-12, 2025"
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Padma Shri Sridhar Vembu",
+      "designation": "Founder & CEO, Zoho Corporation",
+      "quote": "This is my second visit. I am very inspired by the transformational nature of this institution, paving the way for reinventing technical education in our nation."
+    },
+    {
+      "name": "Prof. V. Kamakoti",
+      "designation": "Director, IIT Madras",
+      "quote": "A big eye-opener. This visionary effort can transform the landscape of technical education in India."
+    },
+    {
+      "name": "Mr Bhaskar Bhat",
+      "designation": "Managing Director, Titan Industries Limited",
+      "quote": "The visit has opened my eyes to what can be achieved in India with vision and execution excellence."
+    },
+    {
+      "name": "Prof. M K Surappa",
+      "designation": "Former Vice-Chancellor, Anna University",
+      "quote": "Greatly impressed. This institution will serve as a role model for others."
+    },
+    {
+      "name": "Dr A P J Abdul Kalam",
+      "designation": "Former President of India",
+      "quote": "Delighted to visit BIT. My Greetings!"
+    }
+  ],
+  "differentiators": {
+    "location": "Scenic campus on banks of River Bhavani, away from city chaos",
+    "autonomy": "Autonomous institution approved by AICTE, affiliated to Anna University",
+    "accreditations": [
+      "NAAC A+ Grade",
+      "NBA Accredited"
+    ],
+    "stats": {
+      "happy_students": "7,427",
+      "successful_alumni": "31,771",
+      "dedicated_faculty": "417",
+      "awards_achievements": "1,329+"
+    },
+    "unique_features": [
+      "Industry-sponsored Special Labs",
+      "Technology Business Incubator (TBI)",
+      "Free international certifications (AWS, Google, Microsoft)",
+      "Strong industry partnerships (Oracle, L&T, ABB, Microsoft)",
+      "24/7 digital library access",
+      "Coding bootcamps and hackathon culture",
+      "Startup ecosystem with incubation support",
+      "International competition participation (Singapore, USA)",
+      "Research collaborations with IIT Madras, IIT Bombay",
+      "MoUs with global tech companies"
+    ],
+    "recognition": [
+      "Praised by Zoho CEO Sridhar Vembu",
+      "Recognized by IIT Madras Director",
+      "Featured in national media (The Hindu, etc.)",
+      "Government awards and recognitions"
+    ]
+  }
+}

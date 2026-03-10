@@ -16,9 +16,8 @@ if (Test-Path ".env") {
         $pair = $line -split('=',2)
         if ($pair.Length -eq 2) {
             $name = $pair[0].Trim()
-            $value = $pair[1].Trim().Trim("'\"")
-            # Set environment variable for this session
-            Set-Item -Path ("Env:" + $name) -Value $value
+            $value = $pair[1].Trim().Trim("'`"")
+            Set-Item -Path "Env:$name" -Value $value
             Write-Host "  Set $name" -ForegroundColor DarkGray
         }
     }

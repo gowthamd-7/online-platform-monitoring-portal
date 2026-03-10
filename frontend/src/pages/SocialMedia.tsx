@@ -399,7 +399,7 @@ function SocialMedia() {
             Back to Dashboard
           </button>
           <div className="header-title">
-            <h1>Social Media Platforms</h1>
+            <h1>Online Platform Connections</h1>
             <p>Connect your accounts to showcase your achievements</p>
           </div>
         </div>

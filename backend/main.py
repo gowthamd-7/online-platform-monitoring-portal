@@ -18,13 +18,13 @@ _env_path = pathlib.Path(__file__).resolve().parent / '.env'
 load_dotenv(dotenv_path=str(_env_path))
 
 # Import routers after loading env so modules can read env vars at import time
-from app.routes import ai_suggestions, segmentation
+from app.routes import ai_suggestions, segmentation, personalized_content
 
 # Create tables
 Base.metadata.create_all(bind=engine)
 
 # Initialize FastAPI app
-app = FastAPI(title="College Marketing Platform API")
+app = FastAPI(title="Online Platform Monitoring Portal API")
 
 # Start background scheduler
 scheduler = start_scheduler()
@@ -43,6 +43,9 @@ app.include_router(ai_suggestions.router, prefix="/api/ai", tags=["AI Suggestion
 
 # Include segmentation router
 app.include_router(segmentation.router, prefix="/api/segmentation", tags=["Student Segmentation"])
+
+# Include personalized content router
+app.include_router(personalized_content.router, prefix="/api/content", tags=["Personalized Content"])
 
 # Pydantic models for request/response
 class LeetCodeConnectRequest(BaseModel):
@@ -119,7 +122,7 @@ scraper = LeetCodeScraper()
 
 @app.get("/")
 def read_root():
-    return {"message": "College Marketing Platform API", "status": "running"}
+    return {"message": "Online Platform Monitoring Portal API", "status": "running"}
 
 
 @app.post("/api/leetcode/connect", response_model=LeetCodeProfileResponse)

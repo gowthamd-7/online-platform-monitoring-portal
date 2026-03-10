@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime
 
 # Database URL
-DATABASE_URL = "sqlite:///./college_marketing.db"
+DATABASE_URL = "sqlite:///./online_platform_monitoring.db"
 
 # Create engine
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})

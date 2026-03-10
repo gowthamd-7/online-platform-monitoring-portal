@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './StudentSegmentation.css'
 // Charts
@@ -9,145 +9,120 @@ import {
   Cell,
   Tooltip,
   Legend,
-  BarChart,
-  Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
-  CartesianGrid,
-  LineChart,
-  Line
+  CartesianGrid
 } from 'recharts'
 import { motion } from 'framer-motion'
 
-interface SegmentData {
+interface StudentPerformance {
   name: string
-  count: number
-  percentage: number
+  roll_number: string
+  github_score: number
+  hackerrank_score: number
+  leetcode_score: number
+  overall_score: number
+  rank: number
+  last_activity: string
+}
+
+interface PlatformData {
+  name: string
+  active_students: number
+  avg_score: number
   color?: string
 }
 
-interface Insight {
+interface ActivityInsight {
   icon: string
   title: string
   description: string
 }
 
-interface AnalysisData {
+interface PerformanceData {
   total_students: number
-  segments_created: number
-  geographic_segments: SegmentData[]
-  academic_segments: SegmentData[]
-  socioeconomic_segments: SegmentData[]
-  marketing_channels: SegmentData[]
-  accommodation_segments: SegmentData[]
-  parent_sentiments: SegmentData[]
-  insights: Insight[]
+  active_students: number
+  top_performers: StudentPerformance[]
+  platform_stats: PlatformData[]
+  activity_trends: { month: string; github: number; hackerrank: number; leetcode: number }[]
+  insights: ActivityInsight[]
 }
 
 function StudentSegmentation() {
   const navigate = useNavigate()
-  const [csvFile, setCsvFile] = useState<File | null>(null)
-  const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null)
-  const [showUploadModal, setShowUploadModal] = useState(false)
+  const [performanceData, setPerformanceData] = useState<PerformanceData | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  // Load initial analysis on component mount
+  // Load initial performance data on component mount
   useEffect(() => {
-    loadInitialAnalysis()
+    loadPerformanceData()
   }, [])
 
-  const loadInitialAnalysis = async () => {
+  const loadPerformanceData = async () => {
     try {
       setIsLoading(true)
       setError(null)
       
-      const response = await fetch('http://localhost:8000/api/segmentation/initial-analysis')
-      
-      if (!response.ok) {
-        throw new Error('Failed to load analysis data')
+      // Mock data for now - replace with actual API call
+      const mockData: PerformanceData = {
+        total_students: 1247,
+        active_students: 892,
+        top_performers: [
+          { name: "Arjun Kumar", roll_number: "7376231CS115", github_score: 95, hackerrank_score: 88, leetcode_score: 92, overall_score: 91.7, rank: 1, last_activity: "2 hours ago" },
+          { name: "Priya Singh", roll_number: "7376231CS167", github_score: 87, hackerrank_score: 96, leetcode_score: 89, overall_score: 90.7, rank: 2, last_activity: "5 hours ago" },
+          { name: "Rohit Patel", roll_number: "7376231CS223", github_score: 92, hackerrank_score: 85, leetcode_score: 93, overall_score: 90.0, rank: 3, last_activity: "1 day ago" },
+          { name: "Sneha Reddy", roll_number: "7376231CS278", github_score: 84, hackerrank_score: 91, leetcode_score: 88, overall_score: 87.7, rank: 4, last_activity: "3 hours ago" },
+          { name: "Vikash Gupta", roll_number: "7376231CS342", github_score: 89, hackerrank_score: 79, leetcode_score: 94, overall_score: 87.3, rank: 5, last_activity: "6 hours ago" }
+        ],
+        platform_stats: [
+          { name: "GitHub", active_students: 756, avg_score: 78.5, color: "#00D4FF" },
+          { name: "HackerRank", active_students: 634, avg_score: 72.3, color: "#1E2A78" },
+          { name: "LeetCode", active_students: 502, avg_score: 69.8, color: "#7C88CC" }
+        ],
+        activity_trends: [
+          { month: "Jan", github: 45, hackerrank: 38, leetcode: 32 },
+          { month: "Feb", github: 52, hackerrank: 43, leetcode: 35 },
+          { month: "Mar", github: 61, hackerrank: 47, leetcode: 41 }
+        ],
+        insights: [
+          { icon: "★", title: "Top Performer", description: "Arjun Kumar leads with 91.7% overall score" },
+          { icon: "↗", title: "Growing Activity", description: "GitHub activity increased 24% this month" },
+          { icon: "!", title: "At Risk", description: "127 students inactive for >7 days" }
+        ]
       }
       
-      const data = await response.json()
-      setAnalysisData(data)
+      setPerformanceData(mockData)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
-      console.error('Error loading initial analysis:', err)
+      console.error('Error loading performance data:', err)
     } finally {
       setIsLoading(false)
     }
   }
 
-  const assignColors = (segments: SegmentData[]): SegmentData[] => {
+  const assignColors = (platforms: PlatformData[]): PlatformData[] => {
     const colors = ['#00D4FF', '#1E2A78', '#7C88CC', '#00BDEB', '#3A4A9A']
-    return segments.map((seg, idx) => ({
-      ...seg,
-      color: seg.color || colors[idx % colors.length]
+    return platforms.map((platform, idx) => ({
+      ...platform,
+      color: platform.color || colors[idx % colors.length]
     }))
   }
 
-  // Convert segment data to Recharts-friendly arrays
-  const pieData = (segments?: SegmentData[]) => {
-    if (!segments) return []
-    return segments.map(s => ({ name: s.name, value: s.count, percentage: s.percentage, color: s.color }))
+  const pieData = (platforms?: PlatformData[]) => {
+    if (!platforms) return []
+    return platforms.map(p => ({ 
+      name: p.name, 
+      value: p.active_students, 
+      avg_score: p.avg_score, 
+      color: p.color || '#00D4FF',
+      label: `${p.name}: ${p.active_students}`
+    }))
   }
 
-  const barData = (segments?: SegmentData[]) => {
-    if (!segments) return []
-    return segments.map(s => ({ name: s.name, value: s.count }))
-  }
-
-  // Compute top 3 segments for a quick insight
-  const topSegments = (segments?: SegmentData[]) => {
-    if (!segments) return []
-    return [...segments].sort((a, b) => b.count - a.count).slice(0, 3)
-  }
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file && file.name.endsWith('.csv')) {
-      setCsvFile(file)
-    } else {
-      alert('Please upload a valid CSV file')
-    }
-  }
-
-  const handleAnalyze = async () => {
-    if (!csvFile) {
-      alert('Please upload a CSV file first')
-      return
-    }
-
-    setIsAnalyzing(true)
-    setError(null)
-    
-    try {
-      const formData = new FormData()
-      formData.append('file', csvFile)
-      
-      const response = await fetch('http://localhost:8000/api/segmentation/analyze-new-data', {
-        method: 'POST',
-        body: formData
-      })
-      
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.detail || 'Failed to analyze data')
-      }
-      
-      const data = await response.json()
-      setAnalysisData(data)
-      setShowUploadModal(false)
-      setCsvFile(null)
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to analyze data'
-      setError(errorMessage)
-      alert(errorMessage)
-    } finally {
-      setIsAnalyzing(false)
-    }
-  }
+  // No additional utility functions needed for performance data
 
   const handleBack = () => {
     navigate('/teacher-dashboard')
@@ -167,8 +142,8 @@ function StudentSegmentation() {
               </svg>
             </div>
             <div>
-              <h1>Student Admission Segmentation</h1>
-              <p className="powered-by">Powered by AI Machine Learning</p>
+              <h1>Student Performance Overview</h1>
+              <p className="powered-by">Real-time Platform Activity Monitoring</p>
             </div>
           </div>
         </header>
@@ -182,7 +157,7 @@ function StudentSegmentation() {
     )
   }
 
-  if (error && !analysisData) {
+  if (error && !performanceData) {
     return (
       <div className="segmentation-container">
         <header className="segmentation-header">
@@ -202,7 +177,7 @@ function StudentSegmentation() {
             </svg>
             <h2>Error Loading Data</h2>
             <p>{error}</p>
-            <button className="analyze-button" onClick={loadInitialAnalysis}>Retry</button>
+            <button className="analyze-button" onClick={loadPerformanceData}>Retry</button>
           </div>
         </main>
       </div>
@@ -229,22 +204,22 @@ function StudentSegmentation() {
             </svg>
           </div>
           <div>
-            <h1>Student Admission Segmentation</h1>
-            <p className="powered-by">Powered by AI Machine Learning</p>
+            <h1>Student Performance Overview</h1>
+            <p className="powered-by">Real-time Platform Activity Monitoring</p>
           </div>
         </div>
       </header>
 
       <main className="segmentation-main">
-        {analysisData ? (
+        {performanceData ? (
           <div className="results-section">
             <div className="results-header">
-              <h2>Segmentation Analysis Results</h2>
-              <button className="upload-new-button" onClick={() => setShowUploadModal(true)}>
+              <h2>Performance Analytics Dashboard</h2>
+              <button className="upload-new-button" onClick={() => window.location.reload()}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M3 3v5h5M3 3l5 5m8-8v5h-5m5 0l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                Upload New Data
+                Refresh Data
               </button>
             </div>
 
@@ -256,7 +231,7 @@ function StudentSegmentation() {
                   </svg>
                 </div>
                 <div className="stat-content">
-                  <h3>{analysisData.total_students.toLocaleString()}</h3>
+                  <h3>{performanceData.total_students.toLocaleString()}</h3>
                   <p>Total Students</p>
                 </div>
               </div>
@@ -264,126 +239,142 @@ function StudentSegmentation() {
               <div className="stat-card">
                 <div className="stat-icon" style={{ background: 'rgba(30, 42, 120, 0.1)' }}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M8.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM20 8v6M23 11h-6" stroke="#1E2A78" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="12" cy="12" r="10" stroke="#1E2A78" strokeWidth="2"/>
+                    <polygon points="10,8 16,12 10,16" fill="#1E2A78"/>
                   </svg>
                 </div>
                 <div className="stat-content">
-                  <h3>{analysisData.segments_created}</h3>
-                  <p>Segments Created</p>
+                  <h3>{performanceData.active_students.toLocaleString()}</h3>
+                  <p>Active Students</p>
                 </div>
               </div>
 
               <div className="stat-card">
                 <div className="stat-icon" style={{ background: 'rgba(0, 212, 255, 0.1)' }}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" stroke="#00D4FF" strokeWidth="2"/>
-                    <path d="M12 6v6l4 2" stroke="#00D4FF" strokeWidth="2" strokeLinecap="round"/>
+                    <polygon points="12,2 15.09,8.26 22,9 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9 8.91,8.26" stroke="#00D4FF" strokeWidth="2" fill="none"/>
                   </svg>
                 </div>
                 <div className="stat-content">
-                  <h3>91.2%</h3>
-                  <p>Avg Accuracy</p>
+                  <h3>{Math.round((performanceData.active_students / performanceData.total_students) * 100)}%</h3>
+                  <p>Activity Rate</p>
                 </div>
               </div>
 
               <div className="stat-card">
                 <div className="stat-icon" style={{ background: 'rgba(30, 42, 120, 0.1)' }}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="#1E2A78" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="#1E2A78" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
                 <div className="stat-content">
-                  <h3>{analysisData.geographic_segments.length + analysisData.academic_segments.length}</h3>
-                  <p>Categories</p>
+                  <h3>{performanceData.platform_stats.length}</h3>
+                  <p>Platforms</p>
                 </div>
               </div>
             </div>
 
             <div className="segments-grid">
               <motion.div className="segment-card" layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
-                <h3>Geographic Distribution</h3>
+                <h3>Top Student Rankings</h3>
+                <div className="leaderboard-wrapper">
+                  <div className="leaderboard-list">
+                    {performanceData.top_performers.map((student) => (
+                      <div key={student.roll_number} className={`leaderboard-item rank-${student.rank}`}>
+                        <div className="rank-badge">{student.rank}</div>
+                        <div className="student-info">
+                          <h4>{student.name}</h4>
+                          <p>{student.roll_number}</p>
+                        </div>
+                        <div className="scores">
+                          <div className="score github">GH: {student.github_score}%</div>
+                          <div className="score hackerrank">HR: {student.hackerrank_score}%</div>
+                          <div className="score leetcode">LC: {student.leetcode_score}%</div>
+                        </div>
+                        <div className="overall-score">{student.overall_score}%</div>
+                        <div className="last-activity">{student.last_activity}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div className="segment-card" layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+                <h3>Platform Activity Distribution</h3>
                 <div className="chart-wrapper">
                   <ResponsiveContainer width="100%" height={280}>
                     <PieChart>
-                      <Pie dataKey="value" data={pieData(assignColors(analysisData.geographic_segments))} innerRadius={60} outerRadius={100} label={(entry) => `${entry.name}: ${entry.percentage}%`}>
-                        {assignColors(analysisData.geographic_segments).map((entry, index) => (
+                      <Pie 
+                        dataKey="value" 
+                        data={pieData(assignColors(performanceData.platform_stats))} 
+                        innerRadius={60} 
+                        outerRadius={100} 
+                        labelLine={false}
+                        label={(props: any) => {
+                          const { name, value, percent } = props;
+                          return `${name}: ${value} (${(percent * 100).toFixed(0)}%)`;
+                        }}
+                        stroke="#fff"
+                        strokeWidth={2}
+                      >
+                        {assignColors(performanceData.platform_stats).map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                       </Pie>
-                      <Tooltip formatter={(value: any, name: any, props: any) => [`${value}`, `${props.payload.name}`]} />
-                      <Legend verticalAlign="bottom" height={36} />
+                      <Tooltip 
+                        formatter={(value: any, name: any) => [`${value} students`, name]}
+                        labelStyle={{ color: '#1E2A78' }}
+                        contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E9F2', borderRadius: '8px' }}
+                      />
+                      <Legend 
+                        verticalAlign="bottom" 
+                        height={36}
+                        iconType="circle"
+                      />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
                 <div className="top-list">
-                  <strong>Top areas</strong>
+                  <strong>Platform Stats</strong>
                   <ol>
-                    {topSegments(analysisData.geographic_segments).map(s => (
-                      <li key={s.name}>{s.name} — {s.count} ({s.percentage}%)</li>
+                    {performanceData.platform_stats.map(p => (
+                      <li key={p.name}>{p.name} — {p.active_students} active • Avg: {p.avg_score}%</li>
                     ))}
                   </ol>
                 </div>
               </motion.div>
 
               <motion.div className="segment-card" layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
-                <h3>Marketing Channel Reach</h3>
+                <h3>Activity Trends (Last 3 Months)</h3>
                 <div className="chart-wrapper">
                   <ResponsiveContainer width="100%" height={280}>
-                    <BarChart data={barData(assignColors(analysisData.marketing_channels))} margin={{ top: 10, right: 20, left: -10, bottom: 20 }}>
+                    <LineChart data={performanceData.activity_trends} margin={{ top: 10, right: 20, left: -10, bottom: 20 }}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
+                      <XAxis dataKey="month" />
                       <YAxis />
                       <Tooltip />
-                      <Bar dataKey="value" fill="#00D4FF">
-                        {assignColors(analysisData.marketing_channels).map((entry, idx) => (
-                          <Cell key={`mc-${idx}`} fill={entry.color} />
-                        ))}
-                      </Bar>
-                    </BarChart>
+                      <Legend />
+                      <Line type="monotone" dataKey="github" stroke="#00D4FF" strokeWidth={3} name="GitHub" />
+                      <Line type="monotone" dataKey="hackerrank" stroke="#1E2A78" strokeWidth={3} name="HackerRank" />
+                      <Line type="monotone" dataKey="leetcode" stroke="#7C88CC" strokeWidth={3} name="LeetCode" />
+                    </LineChart>
                   </ResponsiveContainer>
                 </div>
                 <div className="top-list">
-                  <strong>Top channels</strong>
-                  <ol>
-                    {topSegments(analysisData.marketing_channels).map(s => (
-                      <li key={s.name}>{s.name} — {s.count} ({s.percentage}%)</li>
-                    ))}
-                  </ol>
-                </div>
-              </motion.div>
-
-              <motion.div className="segment-card" layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
-                <h3>Academic Performance</h3>
-                <div className="chart-wrapper">
-                  <ResponsiveContainer width="100%" height={280}>
-                    <BarChart data={barData(assignColors(analysisData.academic_segments))} margin={{ top: 10, right: 20, left: -10, bottom: 20 }}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip />
-                      <Bar dataKey="value" fill="#1E2A78">
-                        {assignColors(analysisData.academic_segments).map((entry, idx) => (
-                          <Cell key={`acad-${idx}`} fill={entry.color} />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="top-list">
-                  <strong>Top performers</strong>
-                  <ol>
-                    {topSegments(analysisData.academic_segments).map(s => (
-                      <li key={s.name}>{s.name} — {s.count} ({s.percentage}%)</li>
-                    ))}
-                  </ol>
+                  <strong>Growth Trends</strong>
+                  <ul>
+                    <li>GitHub: +24% increase in submissions</li>
+                    <li>HackerRank: +19% contest participation</li>
+                    <li>LeetCode: +28% problem solving rate</li>
+                  </ul>
                 </div>
               </motion.div>
             </div>
 
             <div className="insights-section">
-              <h3>Key Marketing Insights</h3>
+              <h3>Performance Insights</h3>
               <div className="insights-grid">
-                {analysisData.insights.map((insight, idx) => (
+                {performanceData.insights.map((insight, idx) => (
                   <div key={idx} className="insight-card">
                     <div className="insight-icon">{insight.icon}</div>
                     <h4>{insight.title}</h4>
@@ -394,86 +385,6 @@ function StudentSegmentation() {
             </div>
           </div>
         ) : null}
-
-        {/* Upload Modal */}
-        {showUploadModal && (
-          <div className="modal-overlay" onClick={() => setShowUploadModal(false)}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-header">
-                <h2>Upload New Student Data</h2>
-                <button className="modal-close" onClick={() => setShowUploadModal(false)}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                </button>
-              </div>
-
-              <div className="modal-body">
-                <p>Upload a CSV file with student admission data to generate new segmentation analysis.</p>
-                
-                <div className="file-input-wrapper">
-                  <input
-                    type="file"
-                    id="csv-upload-modal"
-                    accept=".csv"
-                    onChange={handleFileUpload}
-                    className="file-input"
-                  />
-                  <label htmlFor="csv-upload-modal" className="file-label">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    Choose CSV File
-                  </label>
-                </div>
-
-                {csvFile && (
-                  <div className="file-selected">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#00D4FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      <polyline points="22 4 12 14.01 9 11.01" stroke="#00D4FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    {csvFile.name}
-                  </div>
-                )}
-
-                <button 
-                  className="analyze-button"
-                  onClick={handleAnalyze}
-                  disabled={!csvFile || isAnalyzing}
-                >
-                  {isAnalyzing ? (
-                    <>
-                      <div className="spinner"></div>
-                      Analyzing...
-                    </>
-                  ) : (
-                    <>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                      </svg>
-                      Analyze Data
-                    </>
-                  )}
-                </button>
-
-                <div className="info-box">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" stroke="#1E2A78" strokeWidth="2"/>
-                    <line x1="12" y1="16" x2="12" y2="12" stroke="#1E2A78" strokeWidth="2" strokeLinecap="round"/>
-                    <line x1="12" y1="8" x2="12.01" y2="8" stroke="#1E2A78" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                  <div>
-                    <strong>Required Columns:</strong>
-                    <p>geographic_segment, academic_segment, socioeconomic_segment, marketing_channel_type, accommodation, parents_sentiment</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </main>
     </div>
   )

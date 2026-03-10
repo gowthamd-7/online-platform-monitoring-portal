@@ -7,6 +7,8 @@ import StudentAchievements from './pages/StudentAchievements'
 import CompetitiveDashboard from './pages/CompetitiveDashboard'
 import ContentUpload from './pages/ContentUpload'
 import StudentSegmentation from './pages/StudentSegmentation'
+import PersonalizedContent from './pages/PersonalizedContent'
+import AlertManagement from './pages/AlertManagement'
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="/competitive-analysis" element={<CompetitiveDashboard />} />
         <Route path="/content-upload" element={<ContentUpload />} />
         <Route path="/student-segmentation" element={<StudentSegmentation />} />
+        <Route path="/personalized-content" element={<PersonalizedContent />} />
+        <Route path="/alert-management" element={<AlertManagement />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>

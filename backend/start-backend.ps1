@@ -1,7 +1,7 @@
 # Quick Start Script - Backend
 # Run this script to start the backend server
 
-Write-Host "Starting College Marketing Backend..." -ForegroundColor Cyan
+Write-Host "Starting Online Platform Monitoring Backend..." -ForegroundColor Cyan
 Write-Host ""
 
 # Check if we're in the backend directory

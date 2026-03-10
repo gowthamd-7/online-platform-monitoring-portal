@@ -1,4 +1,4 @@
-# College Marketing Platform - Backend
+# Online Platform Monitoring Portal - Backend
 
 This folder is prepared for FastAPI integration.
 

@@ -4,10 +4,8 @@ import StudentDashboard from './pages/StudentDashboard'
 import TeacherDashboard from './pages/TeacherDashboard'
 import SocialMedia from './pages/SocialMedia'
 import StudentAchievements from './pages/StudentAchievements'
-import CompetitiveDashboard from './pages/CompetitiveDashboard'
 import ContentUpload from './pages/ContentUpload'
 import StudentSegmentation from './pages/StudentSegmentation'
-import PersonalizedContent from './pages/PersonalizedContent'
 import AlertManagement from './pages/AlertManagement'
 
 function App() {
@@ -20,10 +18,8 @@ function App() {
         <Route path="/teacher" element={<TeacherDashboard />} />
         <Route path="/social-media" element={<SocialMedia />} />
         <Route path="/student-achievements" element={<StudentAchievements />} />
-        <Route path="/competitive-analysis" element={<CompetitiveDashboard />} />
         <Route path="/content-upload" element={<ContentUpload />} />
         <Route path="/student-segmentation" element={<StudentSegmentation />} />
-        <Route path="/personalized-content" element={<PersonalizedContent />} />
         <Route path="/alert-management" element={<AlertManagement />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

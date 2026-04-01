@@ -29,6 +29,52 @@ if (Test-Path "venv") {
 # Check if packages are installed
 Write-Host ""
 Write-Host "Installing/Updating dependencies..." -ForegroundColor Cyan
+
+# Auto-heal common broken numpy artifacts that cause pip and FastAPI startup issues
+$sitePackages = Join-Path $PSScriptRoot "venv\Lib\site-packages"
+if (Test-Path $sitePackages) {
+    $brokenItems = @(
+        "~umpy",
+        "~umpy.libs",
+        "~umpy-*.dist-info"
+    )
+
+    $removedAny = $false
+    foreach ($pattern in $brokenItems) {
+        $matches = Get-ChildItem -Path $sitePackages -Filter $pattern -Force -ErrorAction SilentlyContinue
+        foreach ($item in $matches) {
+            try {
+                Remove-Item -Path $item.FullName -Recurse -Force -ErrorAction Stop
+                if (-not $removedAny) {
+                    Write-Host "Detected corrupted package artifacts. Cleaning up..." -ForegroundColor Yellow
+                    $removedAny = $true
+                }
+                Write-Host "  Removed $($item.Name)" -ForegroundColor DarkYellow
+            } catch {
+                Write-Host "  Failed to remove $($item.Name): $($_.Exception.Message)" -ForegroundColor Red
+            }
+        }
+    }
+
+    $badWheel = Join-Path $sitePackages "numpy-1.26.4-cp310-cp310-win_amd64.whl"
+    if (Test-Path $badWheel) {
+        try {
+            Remove-Item -Path $badWheel -Force -ErrorAction Stop
+            if (-not $removedAny) {
+                Write-Host "Detected corrupted package artifacts. Cleaning up..." -ForegroundColor Yellow
+                $removedAny = $true
+            }
+            Write-Host "  Removed numpy-1.26.4-cp310-cp310-win_amd64.whl" -ForegroundColor DarkYellow
+        } catch {
+            Write-Host "  Failed to remove numpy wheel artifact: $($_.Exception.Message)" -ForegroundColor Red
+        }
+    }
+
+    if ($removedAny) {
+        Write-Host "Package cleanup completed." -ForegroundColor Green
+    }
+}
+
 pip install -r requirements.txt
 
 Write-Host ""
